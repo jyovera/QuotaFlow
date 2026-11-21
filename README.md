@@ -49,14 +49,26 @@ QuotaFlow incluye un `docker-compose.yml` optimizado con volúmenes de solo lect
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/quotaflow.git
-cd quotaflow
+git clone https://github.com/jyovera/QuotaFlow.git
+cd QuotaFlow
 
 # 2. Iniciar el contenedor con Docker Compose
 docker compose up -d --build
 ```
 
 Abre tu navegador en: **`http://localhost:3333`**
+
+---
+
+## ⚡ Inicio Rápido y Actualizaciones (Windows)
+
+Si estás en Windows, QuotaFlow incluye scripts automatizados de un solo clic:
+
+* **Iniciar:** Haz doble clic en `start.bat` (o ejecuta `npm start`). Configura tu entorno y abre el dashboard automáticamente.
+* **Actualizar:**
+  * **Con 1 clic:** Haz doble clic en `update.bat`.
+  * **Desde la consola:** Ejecuta `npm run update` (o `git pull origin main`).
+  *(El actualizador descarga los cambios de GitHub, actualiza dependencias y recarga Docker si está en uso).*
 
 ### Variables en `docker-compose.yml`:
 * `PROJECTS_HOST_DIR`: Ruta de tus proyectos en el host Windows (ej: `D:/AntigravityProyectos`).

@@ -6,7 +6,8 @@
   "main": "src/server.mjs",
   "scripts": {
     "start": "node src/server.mjs",
-    "dev": "node --watch src/server.mjs"
+    "dev": "node --watch src/server.mjs",
+    "update": "git pull origin main && npm install"
   },
   "keywords": [
     "quotaflow",
