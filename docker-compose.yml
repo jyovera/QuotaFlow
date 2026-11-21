@@ -1,0 +1,20 @@
+services:
+  quotaflow:
+    build: .
+    container_name: quotaflow-app
+    ports:
+      - "3333:3333"
+    environment:
+      - PORT=3333
+      - PROJECTS_DIR=/projects
+      - PROJECTS_HOST_DIR=${PROJECTS_PATH:-D:/AntigravityProyectos}
+      - ANTIGRAVITY_DATA_DIR=/antigravity-data
+      - CREDENTIALS_DIR=/app/credentials
+      - CORTEX_API_KEY=${CORTEX_API_KEY:-}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+    volumes:
+      - ${PROJECTS_PATH:-D:/AntigravityProyectos}:/projects:ro
+      - ${ANTIGRAVITY_PATH:-C:/Users/Jhonnatan/.gemini/antigravity}:/antigravity-data:ro
+      - ./credentials:/app/credentials
+    restart: unless-stopped

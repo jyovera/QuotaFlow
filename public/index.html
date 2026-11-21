@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuotaFlow — AI Quota Management & Project Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">QuotaFlow <span class="badge-version">v2.0</span></div>
+            <div class="brand-subtitle">AI Multi-Account Quota & Project Hub</div>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+          <button class="nav-tab active" data-view="quota-view">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Quota Management
+          </button>
+          <button class="nav-tab" data-view="projects-view">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            Proyectos (<span id="header-projects-count">22</span>)
+          </button>
+        </nav>
+      </div>
+
+      <div class="header-status">
+        <div class="status-pill status-online" id="status-antigravity">
+          <span class="status-dot"></span> Antigravity OK
+        </div>
+        <div class="status-pill" id="status-cortex">
+          <span class="status-dot"></span> Cortex Sincronizado
+        </div>
+        <button class="btn-icon" id="btn-refresh" title="Actualizar datos">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+        </button>
+        <button class="btn-secondary" id="btn-open-settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          Ajustes
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+      
+      <!-- ================= VIEW 1: QUOTA MANAGEMENT (Exact screenshot UI) ================= -->
+      <div id="quota-view" class="view-panel active">
+        <!-- Top Toolbar -->
+        <div class="quota-header">
+          <div class="quota-header-info">
+            <h1 class="page-title">Quota Management</h1>
+            <div class="credentials-count-badge">
+              <span class="count-divider">|</span>
+              <span id="cred-count-total">4</span> credentials &bull; <span class="highlight-green" id="cred-count-loaded">4</span> loaded
+            </div>
+          </div>
+
+          <div class="quota-header-actions">
+            <button class="btn-action-refresh" id="btn-refresh-all-creds">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+              Refresh all credentials
+            </button>
+            <button class="btn-primary" id="btn-add-credential">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Conectar Cuenta
+            </button>
+          </div>
+        </div>
+
+        <!-- Provider Filters Row -->
+        <div class="provider-filters-row">
+          <div class="provider-chips" id="provider-chips">
+            <button class="chip-filter active" data-provider="all"><span class="chip-icon">🔀</span> All <span class="chip-count" id="chip-all">4</span></button>
+            <button class="chip-filter" data-provider="antigravity"><span class="chip-icon">🅰️</span> Antigravity <span class="chip-count" id="chip-antigravity">4</span></button>
+          </div>
+        </div>
+
+        <!-- Search Bar Row -->
+        <div class="cred-search-row">
+          <div class="cred-search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="input-search-creds" placeholder="Search by filename or email">
+          </div>
+
+          <div class="cred-view-controls">
+            <span class="view-label">Default</span>
+            <div class="view-buttons">
+              <button class="btn-view-toggle active" title="Cards View"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+              <button class="btn-view-toggle" title="List View"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credential Cards Grid -->
+        <div class="credentials-cards-grid" id="credentials-grid">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Quota Windows Timeline Section (Image 2) -->
+        <div class="quota-windows-section">
+          <div class="quota-windows-header">
+            <div class="windows-title-left">
+              <h3>Quota windows <span class="info-badge">ⓘ</span></h3>
+              <span class="windows-subtitle" id="timeline-date-range">11/15 – 11/28 &bull; two weeks &bull; current</span>
+            </div>
+
+            <div class="windows-controls">
+              <div class="nav-date-group">
+                <button class="btn-icon-sm" id="btn-timeline-prev">&lt;</button>
+                <button class="btn-date-today" id="btn-timeline-today">Today</button>
+                <button class="btn-icon-sm" id="btn-timeline-next">&gt;</button>
+              </div>
+
+              <div class="view-scope-group">
+                <button class="btn-scope active" data-scope="weekly">Weekly</button>
+                <button class="btn-scope" data-scope="5-hour">5-hour</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gantt Timeline Table -->
+          <div class="timeline-container">
+            <div class="timeline-table" id="timeline-table">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= VIEW 2: PROYECTOS & TOKENS ================= -->
+      <div id="projects-view" class="view-panel">
+        <!-- Hero Tokens Summary -->
+        <div class="section-tokens">
+          <div class="token-grid">
+            <div class="card-metric card-timer highlight-cyan">
+              <div class="metric-top"><span class="metric-label">Reinicio de Cuota Diaria (UTC)</span><span class="metric-badge">24h Cycle</span></div>
+              <div class="timer-display" id="timer-daily-reset">--:--:--</div>
+              <div class="metric-footer">Medianoche UTC (Google Cloud Reset)</div>
+            </div>
+            <div class="card-metric card-timer highlight-indigo">
+              <div class="metric-top"><span class="metric-label">Ventana de Ráfaga (RPM/TPM)</span><span class="metric-badge">Rolling 60s</span></div>
+              <div class="timer-display" id="timer-minute-window">--s</div>
+              <div class="metric-footer">Reinicio dinámico de límite por minuto</div>
+            </div>
+            <div class="card-metric">
+              <div class="metric-top"><span class="metric-label">Tokens Consumidos Hoy</span><span class="metric-icon">🔥</span></div>
+              <div class="metric-value" id="val-tokens-today">--</div>
+              <div class="metric-breakdown">
+                <span>Entrada: <strong id="val-input-today">--</strong></span>
+                <span>Salida: <strong id="val-output-today">--</strong></span>
+              </div>
+            </div>
+            <div class="card-metric">
+              <div class="metric-top"><span class="metric-label">Tokens Ahorrados por Caché</span><span class="metric-icon">⚡</span></div>
+              <div class="metric-value highlight-green" id="val-cache-today">--</div>
+              <div class="metric-footer">Lectura rápida desde memoria caché</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects Explorer Bar -->
+        <div class="projects-bar" style="margin-top: 1.5rem;">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="project-search" placeholder="Buscar proyecto por nombre, stack o descripción...">
+          </div>
+          <div class="filter-pills" id="filter-pills">
+            <button class="filter-btn active" data-filter="all">Todos (<span id="count-all">0</span>)</button>
+            <button class="filter-btn" data-filter="active">Activos (<span id="count-active">0</span>)</button>
+            <button class="filter-btn" data-filter="recent">Recientes (<span id="count-recent">0</span>)</button>
+            <button class="filter-btn" data-filter="cortex">Con Cortex (<span id="count-cortex">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="project-grid" id="project-grid" style="margin-top: 1.5rem;">
+          <div class="loading-state">Escaneando proyectos de Antigravity...</div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Modal: Conectar / Importar Credencial -->
+    <div class="modal-overlay" id="modal-add-cred">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Conectar Cuenta / Importar Credencial</h3>
+          <button class="modal-close" id="modal-cred-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="cred-provider">Proveedor</label>
+            <select id="cred-provider" class="custom-select">
+              <option value="antigravity">Google Antigravity (Gemini / Claude / GPT)</option>
+              <option value="claude">Claude Code (Anthropic)</option>
+              <option value="codex">OpenAI Codex</option>
+              <option value="xai">xAI Grok</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cred-email">Correo Electrónico de la Cuenta</label>
+            <input type="email" id="cred-email" placeholder="ejemplo@gmail.com">
+          </div>
+
+          <div class="form-group">
+            <label for="cred-file-input">Subir Archivo de Credencial JSON (o arrastra aquí)</label>
+            <input type="file" id="cred-file-input" accept=".json">
+          </div>
+
+          <div class="form-group">
+            <label for="cred-json-content">O Pega el Contenido JSON directamente:</label>
+            <textarea id="cred-json-content" rows="4" placeholder="{ 'access_token': '...', 'email': '...' }" class="custom-textarea"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="btn-cancel-cred">Cancelar</button>
+          <button class="btn-primary" id="btn-save-cred">Guardar Credencial</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Settings -->
+    <div class="modal-overlay" id="modal-settings">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Configuración de QuotaFlow</h3>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="input-project-dirs">Rutas de Proyectos a Escanear</label>
+            <input type="text" id="input-project-dirs" placeholder="Ej: D:/AntigravityProyectos o varias separadas por coma">
+          </div>
+          <div class="form-group">
+            <label for="input-antigravity-dir">Ruta de Datos de Antigravity (.gemini/antigravity)</label>
+            <input type="text" id="input-antigravity-dir" placeholder="Ej: C:/Users/TuUsuario/.gemini/antigravity">
+          </div>
+          <div class="form-group">
+            <label for="input-cortex-key">API Key de Cortex (Opcional)</label>
+            <input type="password" id="input-cortex-key" placeholder="cc_...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="btn-cancel-settings">Cancelar</button>
+          <button class="btn-primary" id="btn-save-settings">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Project Inspector / File Explorer -->
+    <div class="modal-overlay" id="modal-project-inspector">
+      <div class="modal modal-xl">
+        <div class="modal-header">
+          <div class="inspector-header-left">
+            <h3 id="inspector-title">Nombre del Proyecto</h3>
+            <span class="inspector-host-path" id="inspector-host-path">D:/AntigravityProyectos/...</span>
+          </div>
+          <div class="inspector-header-actions">
+            <button type="button" class="btn-action-open btn-open-antigravity" id="btn-inspector-antigravity" title="Abrir en Antigravity IDE (nueva ventana)">
+              🅰️ Antigravity IDE
+            </button>
+            <button type="button" class="btn-action-open btn-open-vscode" id="btn-inspector-vscode" title="Abrir en VS Code (nueva ventana)">
+              💬 VS Code
+            </button>
+            <button type="button" class="btn-action-open" id="btn-inspector-copy-path" title="Copiar ruta Windows">
+              📋 Copiar Ruta
+            </button>
+            <button class="modal-close" id="modal-inspector-close">&times;</button>
+          </div>
+        </div>
+
+        <!-- Inspector Tabs -->
+        <div class="inspector-nav-tabs">
+          <button class="inspector-tab active" data-tab="tab-readme">📄 README / Docs</button>
+          <button class="inspector-tab" data-tab="tab-files">📁 Archivos y Código</button>
+          <button class="inspector-tab" data-tab="tab-git">🌿 Historial Git</button>
+          <button class="inspector-tab" data-tab="tab-cortex">🧠 Memoria Cortex</button>
+        </div>
+
+        <div class="modal-body inspector-body">
+          <!-- Tab 1: README -->
+          <div class="inspector-tab-panel active" id="tab-readme">
+            <div class="readme-content" id="inspector-readme-content">
+              Cargando documentación...
+            </div>
+          </div>
+
+          <!-- Tab 2: Files & Code Explorer -->
+          <div class="inspector-tab-panel" id="tab-files">
+            <div class="files-split-view">
+              <div class="file-tree-pane" id="inspector-file-tree">
+                <!-- Tree loaded dynamically -->
+              </div>
+              <div class="file-viewer-pane">
+                <div class="file-viewer-header" id="file-viewer-filename">Selecciona un archivo para previsualizar</div>
+                <pre class="file-code-pre"><code id="file-viewer-code">// Código fuente</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Git History -->
+          <div class="inspector-tab-panel" id="tab-git">
+            <div class="git-history-list" id="inspector-git-list">
+              <!-- Git commits loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Tab 4: Cortex Memory -->
+          <div class="inspector-tab-panel" id="tab-cortex">
+            <div class="cortex-notes-view" id="inspector-cortex-notes">
+              <div style="color:var(--text-muted);font-size:0.85rem;">Memoria de Cortex vinculada al proyecto</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

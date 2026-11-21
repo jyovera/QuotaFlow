@@ -1,0 +1,27 @@
+{
+  "name": "quotaflow",
+  "version": "2.0.0",
+  "description": "QuotaFlow - Intelligent Multi-Account AI Quota Management & Project Hub for Antigravity & AI IDEs",
+  "type": "module",
+  "main": "src/server.mjs",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "node --watch src/server.mjs"
+  },
+  "keywords": [
+    "quotaflow",
+    "antigravity",
+    "ai-quotas",
+    "quota-management",
+    "gemini",
+    "claude",
+    "gpt",
+    "project-hub",
+    "developer-dashboard"
+  ],
+  "author": "jyovera",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
