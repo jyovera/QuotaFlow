@@ -146,7 +146,7 @@ export class CredentialManager {
 
     const files = fs
       .readdirSync(this.credentialsDir)
-      .filter((f) => f.endsWith(".json") && !f.endsWith(".example.json"));
+      .filter((f) => f.endsWith(".json") && !f.toLowerCase().includes("example"));
     const list = [];
     const now = Date.now();
 
